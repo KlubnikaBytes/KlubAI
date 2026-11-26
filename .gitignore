@@ -1,0 +1,49 @@
+# Python virtual environment
+venv/
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment configuration
+.env
+
+# AI model weights
+*.gguf
+*.safetensors
+*.bin
+*.pt
+*.pth
+
+# Model cache
+.cache/
+
+# Local database
+storage/*.db
+storage/*.sqlite3
+
+# Generated files
+outputs/*
+!outputs/.gitkeep
+
+# Logs
+logs/*
+!logs/.gitkeep
+
+# Training checkpoints
+checkpoints/
+
+# Testing cache
+.pytest_cache/
+.coverage
+
+# IDE configuration
+.vscode/
+.idea/
+
+# Operating system files
+Thumbs.db
+.DS_Store
