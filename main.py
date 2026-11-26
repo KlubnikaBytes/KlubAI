@@ -1,4 +1,3 @@
-
 import time
 
 from rich.console import Console
@@ -18,7 +17,7 @@ from config import (
     initialize_directories,
 )
 
-from core.analysis_assistant import AnalysisEnabledKlubAI
+from core.knowledge_assistant import KnowledgeEnabledKlubAI
 
 
 console = Console()
@@ -90,6 +89,11 @@ def show_help():
     )
 
     commands = [
+        ("/knowledge-help", "Show knowledge commands"),
+        ("/knowledge-info", "Show knowledge statistics"),
+        ("/knowledge-list", "List indexed documents"),
+        ("/knowledge-search words", "Search local knowledge"),
+        ("/knowledge-remove ID confirm", "Remove indexed document"),
         ("/analysis-help", "Show data analysis commands"),
         ("/sum filename column", "Calculate column total"),
         ("/average filename column", "Calculate average"),
@@ -310,7 +314,7 @@ def main():
 
     try:
 
-        assistant = AnalysisEnabledKlubAI()
+        assistant = KnowledgeEnabledKlubAI()
 
         with console.status(
             "[bold green]Loading local AI model..."

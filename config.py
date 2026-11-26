@@ -1,10 +1,9 @@
-
 from pathlib import Path
 import os
 
 
 APP_NAME = "KlubAI"
-APP_VERSION = "0.5.0"
+APP_VERSION = "0.6.0-dev"
 COMPANY_NAME = "Klubnika Bytes"
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -16,6 +15,9 @@ DATASETS_DIR = BASE_DIR / "datasets"
 LOGS_DIR = BASE_DIR / "logs"
 
 DATABASE_PATH = STORAGE_DIR / "klubai.db"
+KNOWLEDGE_DIR = BASE_DIR / "knowledge"
+KNOWLEDGE_DOCUMENTS_DIR = KNOWLEDGE_DIR / "documents"
+KNOWLEDGE_DATABASE_PATH = STORAGE_DIR / "knowledge.db"
 
 MODEL_NAME = "Qwen3-1.7B-Q4_K_M.gguf"
 MODEL_PATH = MODELS_DIR / MODEL_NAME
@@ -89,6 +91,7 @@ def initialize_directories():
         OUTPUTS_DIR,
         DATASETS_DIR,
         LOGS_DIR,
+        KNOWLEDGE_DOCUMENTS_DIR,
     ]
 
     for directory in directories:
