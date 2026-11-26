@@ -1,9 +1,26 @@
+
+from config import KNOWLEDGE_DOCUMENTS_DIR
 from knowledge.knowledge_database import KnowledgeDatabase
+from knowledge.document_ingestor import DocumentIngestor
 
 
 class KnowledgeManager:
-    def __init__(self, database=None):
-        self.database = database if database is not None else KnowledgeDatabase()
+
+    def __init__(
+        self,
+        database=None,
+        directory=KNOWLEDGE_DOCUMENTS_DIR,
+    ):
+        self.database = (
+            database
+            if database is not None
+            else KnowledgeDatabase()
+        )
+
+        self.ingestor = DocumentIngestor(
+            self.database,
+            directory,
+        )
 
     def list_documents(self):
         return self.database.list_documents()
@@ -15,4 +32,15 @@ class KnowledgeManager:
         return self.database.search(query)
 
     def remove_document(self, document_id):
-        return self.database.remove_document(document_id)
+        return self.database.remove_document(
+            document_id
+        )
+
+    def list_files(self):
+        return self.ingestor.list_files()
+
+    def ingest(self, filename):
+        return self.ingestor.ingest(filename)
+
+    def ingest_all(self):
+        return self.ingestor.ingest_all()

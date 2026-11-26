@@ -17,9 +17,29 @@ class KnowledgeRouter:
         command = parts[0].lower()
         arg = parts[1].strip() if len(parts) == 2 else ''
         if command == '/knowledge-help':
-            return ('Knowledge commands (Phase 7A)\n/knowledge-info\n/knowledge-list\n'
-                    '/knowledge-search words\n/knowledge-remove ID confirm\n'
-                    'Document import will be available in Phase 7B.')
+            return ('Knowledge commands (Phase 7B)\n/knowledge-info\n/knowledge-list\n'
+                    '/knowledge-files\n/knowledge-add filename\n/knowledge-add-all\n'
+                    '/knowledge-search words\n/knowledge-remove ID confirm')
+        if command == '/knowledge-files' and not arg:
+            return '\n'.join(safe_display(f['name']) for f in self.manager.list_files()) or 'No source documents.'
+        if command == '/knowledge-add':
+            if not arg:
+                return 'Usage: /knowledge-add filename'
+            try:
+                result = self.manager.ingest(arg)
+            except ValueError as error:
+                return 'Import rejected: ' + safe_display(error)
+            return f"Imported: {safe_display(result['filename'])} | ID: {result['id']} | Chunks: {result['chunks']}"
+        if command == '/knowledge-add-all' and not arg:
+            results = self.manager.ingest_all()
+            lines = []
+            for result in results:
+                name = safe_display(result['filename'])
+                if 'error' in result:
+                    lines.append(f"Not imported: {name} | {safe_display(result['error'])}")
+                else:
+                    lines.append(f"Imported: {name} | ID: {result['id']} | Chunks: {result['chunks']}")
+            return '\n'.join(lines) or 'No source documents.'
         if command == '/knowledge-info' and not arg:
             stats = self.manager.statistics()
             return f"Knowledge database: SQLite FTS5\nDocuments: {stats['documents']}\nChunks: {stats['chunks']}"

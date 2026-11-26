@@ -90,6 +90,9 @@ def show_help():
 
     commands = [
         ("/knowledge-help", "Show knowledge commands"),
+        ("/knowledge-files", "List source documents"),
+        ("/knowledge-add filename", "Import document"),
+        ("/knowledge-add-all", "Import all supported documents"),
         ("/knowledge-info", "Show knowledge statistics"),
         ("/knowledge-list", "List indexed documents"),
         ("/knowledge-search words", "Search local knowledge"),
