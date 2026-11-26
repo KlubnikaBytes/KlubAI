@@ -2,7 +2,10 @@
 from decimal import DecimalException
 
 from core.file_assistant import FileEnabledKlubAI
-from tools.task_router import TaskRouter
+
+from tools.extended_task_router import (
+    ExtendedTaskRouter,
+)
 
 
 class TaskEnabledKlubAI(FileEnabledKlubAI):
@@ -11,7 +14,7 @@ class TaskEnabledKlubAI(FileEnabledKlubAI):
 
         super().__init__()
 
-        self.task_router = TaskRouter()
+        self.task_router = ExtendedTaskRouter()
 
     def chat_stream(self, user_message):
 
@@ -29,7 +32,8 @@ class TaskEnabledKlubAI(FileEnabledKlubAI):
             DecimalException,
         ) as error:
 
-            yield f"Calculation error: {error}"
+            yield f"Task error: {error}"
+
             return
 
         if response is None:
@@ -43,9 +47,13 @@ class TaskEnabledKlubAI(FileEnabledKlubAI):
         if user_message.lower() in (
             "/task-help",
             "show task commands",
+            "/units",
+            "show supported units",
+            "show unit conversions",
         ):
 
             yield response
+
             return
 
         self.conversation.add_user_message(

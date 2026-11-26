@@ -90,6 +90,16 @@ def show_help():
     )
 
     commands = [
+        ("/date", "Show current date"),
+        ("/time", "Show current time"),
+        ("/datetime", "Show current date and time"),
+        ("/day", "Show current day"),
+        ("/days-between date date", "Calculate date difference"),
+        ("/add-days date number", "Calculate future date"),
+        ("/subtract-days date number", "Calculate previous date"),
+        ("/leap-year year", "Check leap year"),
+        ("/convert value unit to unit", "Convert units"),
+        ("/units", "Show supported units"),
         ("/task-help", "Show task commands"),
         ("/calculate expression", "Calculate mathematics"),
         ("/gst amount rate", "Calculate GST"),
