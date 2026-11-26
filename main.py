@@ -18,7 +18,7 @@ from config import (
     initialize_directories,
 )
 
-from core.task_assistant import TaskEnabledKlubAI
+from core.analysis_assistant import AnalysisEnabledKlubAI
 
 
 console = Console()
@@ -90,6 +90,17 @@ def show_help():
     )
 
     commands = [
+        ("/analysis-help", "Show data analysis commands"),
+        ("/sum filename column", "Calculate column total"),
+        ("/average filename column", "Calculate average"),
+        ("/max filename column", "Find maximum value"),
+        ("/min filename column", "Find minimum value"),
+        ("/count filename", "Count records"),
+        ("/columns filename", "Show column names"),
+        ("/analyze filename", "Analyze dataset"),
+        ("/group filename group value", "Grouped totals"),
+        ("/summarize filename", "Summarize document"),
+        ("/ask-file filename | question", "Ask about document"),
         ("/read-help", "Show file reading commands"),
         ("/read filename", "Read local document"),
         ("/file-info filename", "Show file information"),
@@ -299,7 +310,7 @@ def main():
 
     try:
 
-        assistant = TaskEnabledKlubAI()
+        assistant = AnalysisEnabledKlubAI()
 
         with console.status(
             "[bold green]Loading local AI model..."
