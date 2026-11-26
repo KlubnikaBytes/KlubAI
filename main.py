@@ -18,7 +18,7 @@ from config import (
     initialize_directories,
 )
 
-from core.file_assistant import FileEnabledKlubAI
+from core.task_assistant import TaskEnabledKlubAI
 
 
 console = Console()
@@ -90,6 +90,11 @@ def show_help():
     )
 
     commands = [
+        ("/task-help", "Show task commands"),
+        ("/calculate expression", "Calculate mathematics"),
+        ("/gst amount rate", "Calculate GST"),
+        ("/discount amount rate", "Calculate discount"),
+        ("/percentage rate amount", "Calculate percentage"),
         ("/file-help", "Show file generation commands"),
         ("/create format topic", "Generate a file"),
         ("/files", "Show generated files"),
@@ -280,7 +285,7 @@ def main():
 
     try:
 
-        assistant = FileEnabledKlubAI()
+        assistant = TaskEnabledKlubAI()
 
         with console.status(
             "[bold green]Loading local AI model..."
