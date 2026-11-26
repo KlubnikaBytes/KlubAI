@@ -17,10 +17,20 @@ class KnowledgeRouter:
         command = parts[0].lower()
         arg = parts[1].strip() if len(parts) == 2 else ''
         if command == '/knowledge-help':
-            return ('Knowledge commands (Phase 7B)\n/knowledge-info\n/knowledge-list\n'
+            return ('Knowledge commands (Phase 7C)\n/knowledge-info\n/knowledge-list\n'
                     '/knowledge-files\n/knowledge-add filename\n/knowledge-add-all\n'
-                    '/knowledge-search words\n/knowledge-remove ID confirm')
-        if command == '/knowledge-files' and not arg:
+                    '/knowledge-search words\n/knowledge-remove ID confirm\n'
+                    '/knowledge-embed\n/knowledge-embedding-info')
+        if command == '/knowledge-embedding-info' and not arg:
+            stats = self.manager.embedding_store().statistics()
+            return f"Embedding dimensions: 384\nTotal chunks: {stats['total']}\nEmbedded chunks: {stats['indexed']}\nPending chunks: {stats['pending']}"
+        if command == '/knowledge-embed' and not arg:
+            try:
+                count = self.manager.embedding_store().build()
+                return f"Generated embeddings: {count}"
+            except Exception as error:
+                return "Embedding failed: " + safe_display(error)
+        if command == '/knowledge-files'  and not arg:
             return '\n'.join(safe_display(f['name']) for f in self.manager.list_files()) or 'No source documents.'
         if command == '/knowledge-add':
             if not arg:

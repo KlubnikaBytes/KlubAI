@@ -101,3 +101,7 @@ def initialize_directories():
             parents=True,
             exist_ok=True,
         )
+
+EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
+EMBEDDING_DIMENSIONS = 384
+EMBEDDING_CACHE = KNOWLEDGE_DIR / "embeddings"

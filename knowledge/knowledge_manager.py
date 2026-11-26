@@ -1,7 +1,7 @@
-
 from config import KNOWLEDGE_DOCUMENTS_DIR
 from knowledge.knowledge_database import KnowledgeDatabase
 from knowledge.document_ingestor import DocumentIngestor
+from knowledge.embedding_store import EmbeddingStore
 
 
 class KnowledgeManager:
@@ -21,6 +21,11 @@ class KnowledgeManager:
             self.database,
             directory,
         )
+
+    def embedding_store(self):
+        if not hasattr(self, "_embedding_store"):
+            self._embedding_store = EmbeddingStore(self.database)
+        return self._embedding_store
 
     def list_documents(self):
         return self.database.list_documents()

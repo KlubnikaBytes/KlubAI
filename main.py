@@ -89,6 +89,8 @@ def show_help():
     )
 
     commands = [
+        ("/knowledge-embed", "Generate missing local embeddings"),
+        ("/knowledge-embedding-info", "Show embedding statistics"),
         ("/knowledge-help", "Show knowledge commands"),
         ("/knowledge-files", "List source documents"),
         ("/knowledge-add filename", "Import document"),
