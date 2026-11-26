@@ -1,4 +1,3 @@
-
 from llama_cpp import Llama
 
 from config import (
@@ -142,14 +141,14 @@ class ModelEngine:
                     "long. Please shorten it."
                 )
 
-    def stream_response(self, messages):
+    def stream_response(self, messages, temperature=TEMPERATURE):
 
         prompt = self.prepare_prompt(messages)
 
         stream = self.model(
             prompt,
             max_tokens=MAX_TOKENS,
-            temperature=TEMPERATURE,
+            temperature=temperature,
             top_p=TOP_P,
             top_k=TOP_K,
             repeat_penalty=REPEAT_PENALTY,

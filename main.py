@@ -17,7 +17,7 @@ from config import (
     initialize_directories,
 )
 
-from core.knowledge_assistant import KnowledgeEnabledKlubAI
+from core.rag_assistant import RAGEnabledKlubAI
 
 
 console = Console()
@@ -89,6 +89,11 @@ def show_help():
     )
 
     commands = [
+        ("/ask-knowledge question", "Answer from local knowledge"),
+        ("/rag-info", "Show RAG configuration"),
+        ("/rag-help", "Show RAG commands"),
+        ("/rag-on", "Enable automatic knowledge questions"),
+        ("/rag-off", "Disable automatic knowledge questions"),
         ("/knowledge-semantic query", "Semantic knowledge search"),
         ("/knowledge-hybrid query", "Hybrid knowledge search"),
         ("/knowledge-retrieval-info", "Show retrieval statistics"),
@@ -322,7 +327,7 @@ def main():
 
     try:
 
-        assistant = KnowledgeEnabledKlubAI()
+        assistant = RAGEnabledKlubAI()
 
         with console.status(
             "[bold green]Loading local AI model..."
