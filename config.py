@@ -4,7 +4,7 @@ import os
 
 
 APP_NAME = "KlubAI"
-APP_VERSION = "0.4.0"
+APP_VERSION = "0.5.0"
 COMPANY_NAME = "Klubnika Bytes"
 
 BASE_DIR = Path(__file__).resolve().parent

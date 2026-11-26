@@ -18,7 +18,7 @@ from config import (
     initialize_directories,
 )
 
-from core.file_assistant import FileEnabledKlubAI
+from core.analysis_assistant import AnalysisEnabledKlubAI
 
 
 console = Console()
@@ -90,6 +90,36 @@ def show_help():
     )
 
     commands = [
+        ("/analysis-help", "Show data analysis commands"),
+        ("/sum filename column", "Calculate column total"),
+        ("/average filename column", "Calculate average"),
+        ("/max filename column", "Find maximum value"),
+        ("/min filename column", "Find minimum value"),
+        ("/count filename", "Count records"),
+        ("/columns filename", "Show column names"),
+        ("/analyze filename", "Analyze dataset"),
+        ("/group filename group value", "Grouped totals"),
+        ("/summarize filename", "Summarize document"),
+        ("/ask-file filename | question", "Ask about document"),
+        ("/read-help", "Show file reading commands"),
+        ("/read filename", "Read local document"),
+        ("/file-info filename", "Show file information"),
+        ("/input-files", "List available input files"),
+        ("/date", "Show current date"),
+        ("/time", "Show current time"),
+        ("/datetime", "Show current date and time"),
+        ("/day", "Show current day"),
+        ("/days-between date date", "Calculate date difference"),
+        ("/add-days date number", "Calculate future date"),
+        ("/subtract-days date number", "Calculate previous date"),
+        ("/leap-year year", "Check leap year"),
+        ("/convert value unit to unit", "Convert units"),
+        ("/units", "Show supported units"),
+        ("/task-help", "Show task commands"),
+        ("/calculate expression", "Calculate mathematics"),
+        ("/gst amount rate", "Calculate GST"),
+        ("/discount amount rate", "Calculate discount"),
+        ("/percentage rate amount", "Calculate percentage"),
         ("/file-help", "Show file generation commands"),
         ("/create format topic", "Generate a file"),
         ("/files", "Show generated files"),
@@ -280,7 +310,7 @@ def main():
 
     try:
 
-        assistant = FileEnabledKlubAI()
+        assistant = AnalysisEnabledKlubAI()
 
         with console.status(
             "[bold green]Loading local AI model..."
