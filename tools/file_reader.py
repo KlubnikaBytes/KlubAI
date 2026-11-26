@@ -1,4 +1,3 @@
-
 import csv
 import json
 import zipfile
@@ -126,6 +125,9 @@ class FileReader:
 
             text = page.extract_text() or ""
 
+            if not text.strip():
+                continue
+
             sections.append(
                 f"Page {index + 1}\n{text}"
             )
@@ -207,7 +209,7 @@ class FileReader:
 
                 rows = sheet.iter_rows(
                     max_row=self.MAX_ROWS + 1,
-                    max_col=self.MAX_COLUMNS,
+                    max_col=min(sheet.max_column or self.MAX_COLUMNS, self.MAX_COLUMNS),
                     values_only=True,
                 )
 
@@ -223,10 +225,13 @@ class FileReader:
                     if not any(value is not None for value in row):
                         continue
 
+                    cells = list(row)
+                    while cells and cells[-1] is None:
+                        cells.pop()
                     sections.append(
                         " | ".join(
                             "" if value is None else str(value)
-                            for value in row
+                            for value in cells
                         )
                     )
 

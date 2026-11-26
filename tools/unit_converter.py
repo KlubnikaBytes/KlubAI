@@ -1,4 +1,3 @@
-
 from decimal import Decimal, localcontext
 
 
@@ -158,6 +157,7 @@ class UnitConverter:
 
         unit = unit.strip().lower()
 
+        unit = unit.replace("â°", "°").replace("â²", "²")
         unit = unit.replace("²", "2")
         unit = unit.replace("^2", "2")
 
@@ -288,6 +288,10 @@ class UnitConverter:
 
         # Display up to 12 significant digits.
         result = format(value, ".12g")
+
+        # Keep extreme values compact to avoid enormous strings.
+        if -12 <= Decimal(result).adjusted() <= 30:
+            result = format(Decimal(result), "f")
 
         if "e" not in result.lower() and "." in result:
 
