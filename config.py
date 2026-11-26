@@ -105,3 +105,6 @@ def initialize_directories():
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 EMBEDDING_DIMENSIONS = 384
 EMBEDDING_CACHE = KNOWLEDGE_DIR / "embeddings"
+
+SEMANTIC_MIN_SCORE = 0.20
+HYBRID_RRF_K = 60

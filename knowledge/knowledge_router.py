@@ -17,10 +17,30 @@ class KnowledgeRouter:
         command = parts[0].lower()
         arg = parts[1].strip() if len(parts) == 2 else ''
         if command == '/knowledge-help':
-            return ('Knowledge commands (Phase 7C)\n/knowledge-info\n/knowledge-list\n'
+            return ('Knowledge commands (Phase 7D)\n/knowledge-info\n/knowledge-list\n'
                     '/knowledge-files\n/knowledge-add filename\n/knowledge-add-all\n'
                     '/knowledge-search words\n/knowledge-remove ID confirm\n'
-                    '/knowledge-embed\n/knowledge-embedding-info')
+                    '/knowledge-embed\n/knowledge-embedding-info\n'
+                    '/knowledge-semantic query\n/knowledge-hybrid query\n/knowledge-retrieval-info')
+        if command == '/knowledge-retrieval-info' and not arg:
+            stats = self.manager.embedding_store().statistics()
+            return ("Keyword: SQLite FTS5 / BM25\nSemantic: cosine similarity\nHybrid: reciprocal rank fusion\n"
+                    f"Embedded chunks: {stats['indexed']}/{stats['total']}\nPending chunks: {stats['pending']}")
+        if command in ('/knowledge-semantic', '/knowledge-hybrid'):
+            if not arg:
+                return f'Usage: {command} query'
+            try:
+                stats = self.manager.embedding_store().statistics()
+                semantic = command == '/knowledge-semantic'
+                results = self.manager.semantic_search(arg) if semantic else self.manager.hybrid_search(arg)
+                label = 'Cosine similarity' if semantic else 'RRF score'
+                lines = [f"Rank {i}: {safe_display(r['filename'])} | {safe_display(r['source_location'])}\n{label}: {r['score']:.6f}\n{safe_display(r['content'][:1500])}" for i, r in enumerate(results, 1)]
+                response = '\n\n'.join(lines) or 'No matching knowledge found.'
+                if stats['pending']:
+                    response += f"\nWarning: {stats['pending']} chunks lack embeddings. Run /knowledge-embed."
+                return response
+            except Exception as error:
+                return 'Retrieval failed: ' + safe_display(error)
         if command == '/knowledge-embedding-info' and not arg:
             stats = self.manager.embedding_store().statistics()
             return f"Embedding dimensions: 384\nTotal chunks: {stats['total']}\nEmbedded chunks: {stats['indexed']}\nPending chunks: {stats['pending']}"

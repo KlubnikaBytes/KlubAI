@@ -2,6 +2,8 @@ from config import KNOWLEDGE_DOCUMENTS_DIR
 from knowledge.knowledge_database import KnowledgeDatabase
 from knowledge.document_ingestor import DocumentIngestor
 from knowledge.embedding_store import EmbeddingStore
+from knowledge.vector_search import VectorSearch
+from knowledge.hybrid_retriever import HybridRetriever
 
 
 class KnowledgeManager:
@@ -49,3 +51,9 @@ class KnowledgeManager:
 
     def ingest_all(self):
         return self.ingestor.ingest_all()
+
+    def semantic_search(self, query, limit=5):
+        return VectorSearch(self.embedding_store()).search(query, limit)
+
+    def hybrid_search(self, query, limit=5):
+        return HybridRetriever(self.database, VectorSearch(self.embedding_store())).search(query, limit)

@@ -89,6 +89,9 @@ def show_help():
     )
 
     commands = [
+        ("/knowledge-semantic query", "Semantic knowledge search"),
+        ("/knowledge-hybrid query", "Hybrid knowledge search"),
+        ("/knowledge-retrieval-info", "Show retrieval statistics"),
         ("/knowledge-embed", "Generate missing local embeddings"),
         ("/knowledge-embedding-info", "Show embedding statistics"),
         ("/knowledge-help", "Show knowledge commands"),
