@@ -90,6 +90,10 @@ def show_help():
     )
 
     commands = [
+        ("/read-help", "Show file reading commands"),
+        ("/read filename", "Read local document"),
+        ("/file-info filename", "Show file information"),
+        ("/input-files", "List available input files"),
         ("/date", "Show current date"),
         ("/time", "Show current time"),
         ("/datetime", "Show current date and time"),

@@ -2,10 +2,7 @@
 from decimal import DecimalException
 
 from core.file_assistant import FileEnabledKlubAI
-
-from tools.extended_task_router import (
-    ExtendedTaskRouter,
-)
+from tools.file_read_router import FileReadRouter
 
 
 class TaskEnabledKlubAI(FileEnabledKlubAI):
@@ -14,7 +11,7 @@ class TaskEnabledKlubAI(FileEnabledKlubAI):
 
         super().__init__()
 
-        self.task_router = ExtendedTaskRouter()
+        self.task_router = FileReadRouter()
 
     def chat_stream(self, user_message):
 
@@ -30,9 +27,19 @@ class TaskEnabledKlubAI(FileEnabledKlubAI):
             ValueError,
             ArithmeticError,
             DecimalException,
+            OSError,
         ) as error:
 
             yield f"Task error: {error}"
+
+            return
+
+        except Exception as error:
+
+            yield (
+                "Task execution failed: "
+                f"{type(error).__name__}: {error}"
+            )
 
             return
 
@@ -44,12 +51,28 @@ class TaskEnabledKlubAI(FileEnabledKlubAI):
 
             return
 
-        if user_message.lower() in (
-            "/task-help",
-            "show task commands",
-            "/units",
-            "show supported units",
-            "show unit conversions",
+        command = user_message.lower()
+
+        # Do not automatically store extracted documents
+        # in conversation history or AI memory.
+        if (
+            command.startswith((
+                "/read ",
+                "/file-info ",
+                "read ",
+            ))
+            or command in {
+                "/task-help",
+                "show task commands",
+                "/units",
+                "show supported units",
+                "show unit conversions",
+                "/read-help",
+                "/input-files",
+                "show input files",
+                "list input files",
+                "show file reading commands",
+            }
         ):
 
             yield response

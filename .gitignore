@@ -47,3 +47,6 @@ checkpoints/
 # Operating system files
 Thumbs.db
 .DS_Store
+# Private user input documents
+inputs/*
+!inputs/.gitkeep
