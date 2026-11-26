@@ -16,7 +16,7 @@ class RAGRouter:
         if command == '/rag-help' and not arg:
             return iter(['/ask-knowledge question\n/rag-info\n/rag-on\n/rag-off\nAutomatic mode handles questions beginning with About Billnika or About KlubAI.'])
         if command == '/rag-info' and not arg:
-            return iter([f'Automatic RAG: {self.enabled}\nMaximum chunks: {RAG_MAX_CHUNKS}\nEvidence token budget: {RAG_KNOWLEDGE_TOKENS}\nTemperature: {RAG_TEMPERATURE}'])
+            return iter([f'Automatic RAG: {self.enabled}\nMaximum chunks: {RAG_MAX_CHUNKS}\nEvidence token budget: {RAG_KNOWLEDGE_TOKENS}\nTemperature: {RAG_TEMPERATURE}\nAnswer mode: validated excerpts + local section selection'])
         if command in ('/rag-on', '/rag-off') and not arg:
             self.enabled = command == '/rag-on'
             return iter([f'Automatic RAG: {self.enabled} (current process only)'])

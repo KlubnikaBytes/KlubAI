@@ -8,7 +8,7 @@ class FakeEngine:
     def sanitize_content(self, text): return text.replace('<|im_end|>', '')
     def prepare_prompt(self, messages): return 'prompt'
     def is_loaded(self): return True
-    def stream_response(self, messages, temperature): yield 'Supported answer.'
+    def stream_response(self, messages, temperature): yield '[{"source":1,"quote":"Billnika uses Flutter."}]' 
 
 def row(content='Billnika uses Flutter.', methods=None):
     return dict(content=content, filename='billnika.txt', source_location='characters 1-21', methods=['semantic'] if methods is None else methods)
@@ -26,7 +26,7 @@ def test_budget():
 
 def test_answer():
     result = ''.join(RAGEngine(FakeEngine(), manager([row()])).answer('Which framework?'))
-    assert 'Supported answer.' in result and 'billnika.txt' in result
+    assert 'Billnika uses Flutter.' in result and 'billnika.txt' in result
 
 def test_no_evidence():
     result = ''.join(RAGEngine(FakeEngine(), manager([])).answer('Question?'))
@@ -42,5 +42,5 @@ def test_router():
     assert 'Usage' in ''.join(router.route('/ask-knowledge'))
     assert 'True' in ''.join(router.route('/rag-on'))
     assert router.route('Calculate 25 x 16') is None
-    assert 'Supported answer' in ''.join(router.route('About Billnika framework?'))
+    assert 'Billnika uses Flutter.' in ''.join(router.route('About Billnika framework?'))
     assert 'False' in ''.join(router.route('/rag-off'))
