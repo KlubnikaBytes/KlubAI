@@ -1,3 +1,4 @@
+from knowledge.administration import KnowledgeAdministration, COMMANDS
 import unicodedata
 from knowledge.knowledge_manager import KnowledgeManager
 
@@ -16,12 +17,18 @@ class KnowledgeRouter:
             return None
         command = parts[0].lower()
         arg = parts[1].strip() if len(parts) == 2 else ''
+        try:
+            result = KnowledgeAdministration(self.manager).route(command, arg)
+            if result is not None:
+                return safe_display(result)
+        except (ValueError, OSError) as error:
+            return "Management rejected: " + safe_display(error)
         if command == '/knowledge-help':
-            return ('Knowledge commands (Phase 7D)\n/knowledge-info\n/knowledge-list\n'
+            return ('Knowledge commands (Phase 7G)\n/knowledge-info\n/knowledge-list\n'
                     '/knowledge-files\n/knowledge-add filename\n/knowledge-add-all\n'
                     '/knowledge-search words\n/knowledge-remove ID confirm\n'
                     '/knowledge-embed\n/knowledge-embedding-info\n'
-                    '/knowledge-semantic query\n/knowledge-hybrid query\n/knowledge-retrieval-info')
+                    '/knowledge-semantic query\n/knowledge-hybrid query\n/knowledge-retrieval-info' + '\n' + '\n'.join(COMMANDS))
         if command == '/knowledge-retrieval-info' and not arg:
             stats = self.manager.embedding_store().statistics()
             return ("Keyword: SQLite FTS5 / BM25\nSemantic: cosine similarity\nHybrid: reciprocal rank fusion\n"

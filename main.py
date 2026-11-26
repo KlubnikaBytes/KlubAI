@@ -1,4 +1,5 @@
 import time
+from knowledge.administration import COMMANDS
 
 from rich.console import Console
 from rich.panel import Panel
@@ -155,6 +156,7 @@ def show_help():
         ("/exit", "Exit KlubAI"),
     ]
 
+    commands.extend(COMMANDS.items())
     for command, description in commands:
 
         table.add_row(

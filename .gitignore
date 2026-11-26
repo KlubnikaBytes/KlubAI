@@ -65,3 +65,7 @@ knowledge/cache/*
 !knowledge/cache/.gitkeep
 
 storage/knowledge.db*
+
+# Private knowledge backups and metadata
+storage/backups/
+phase7g_source.txt
