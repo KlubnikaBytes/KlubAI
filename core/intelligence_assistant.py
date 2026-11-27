@@ -1,3 +1,4 @@
+from intelligence.quality_router import QualityRouter
 from intelligence.context_router import ContextRouter
 from core.language_assistant import LanguageEnabledKlubAI
 from intelligence.intelligence_router import IntelligenceRouter
@@ -9,12 +10,31 @@ class IntelligenceEnabledKlubAI(LanguageEnabledKlubAI):
         self.intelligence_router = IntelligenceRouter()
         self.last_intent = None
         self.context_router = ContextRouter(self)
+        self.quality_router = QualityRouter()
 
     def get_conversation_messages(self):
         messages = super().get_conversation_messages()
         return self.context_router.engine.select(messages, self.context_router.enabled and self.response_language == "en").messages
 
+    def stream_chat_response(self, messages):
+        # Parent already buffers and validates the selected language.
+        stream = super().stream_chat_response(messages)
+        try:
+            answer = "".join(stream)
+        finally:
+            stream.close()
+        if self.response_language == "en" and self.quality_router.enabled:
+            try:
+                self.quality_router.record(messages[-1]["content"], answer)
+            except ValueError:
+                pass  # Unsupported assessment input must not block chat.
+        yield answer
+
     def chat_stream(self, user_message):
+        response = self.quality_router.route(user_message)
+        if response is not None:
+            yield response
+            return
         response = self.context_router.route(user_message)
         if response is not None:
             yield response
@@ -28,7 +48,10 @@ class IntelligenceEnabledKlubAI(LanguageEnabledKlubAI):
         except ValueError:
             self.last_intent = None
         yield from super().chat_stream(user_message)
+        if user_message.strip().lower() == "/delete-data confirm":
+            self.quality_router.reset()
 
     def clear_conversation(self):
         super().clear_conversation()
+        self.quality_router.reset()
         self.last_intent = None
