@@ -1,3 +1,4 @@
+from intelligence.benchmark_router import BenchmarkRouter
 from intelligence.recovery_router import RecoveryRouter
 from intelligence.verification_router import VerificationRouter
 from intelligence.fact_router import FactRouter
@@ -18,6 +19,7 @@ class IntelligenceEnabledKlubAI(LanguageEnabledKlubAI):
         self.verification_router = VerificationRouter(self.fact_router.engine.registry)
 
         self.recovery_router = RecoveryRouter(self)
+        self.benchmark_router = BenchmarkRouter(self.engine)
 
     def get_conversation_messages(self):
         messages = super().get_conversation_messages()
@@ -69,6 +71,10 @@ class IntelligenceEnabledKlubAI(LanguageEnabledKlubAI):
         return None
 
     def chat_stream(self, user_message):
+        response = self.benchmark_router.route(user_message)
+        if response is not None:
+            yield response
+            return
         response = self.recovery_router.route(user_message)
         if response is not None:
             yield response

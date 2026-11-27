@@ -1,0 +1,235 @@
+[
+  {
+    "id": "intent_1",
+    "kind": "intent",
+    "question": "Hello",
+    "expected": "greeting"
+  },
+  {
+    "id": "intent_2",
+    "kind": "intent",
+    "question": "Who created Python?",
+    "expected": "factual"
+  },
+  {
+    "id": "intent_3",
+    "kind": "intent",
+    "question": "Write a Python program",
+    "expected": "programming"
+  },
+  {
+    "id": "intent_4",
+    "kind": "intent",
+    "question": "What is Laravel?",
+    "expected": "definition"
+  },
+  {
+    "id": "intent_5",
+    "kind": "intent",
+    "question": "Calculate 25 x 16",
+    "expected": "calculation"
+  },
+  {
+    "id": "intent_6",
+    "kind": "intent",
+    "question": "/delete-data confirm",
+    "expected": "command"
+  },
+  {
+    "id": "math_7",
+    "kind": "math",
+    "question": "25*16",
+    "expected": "400"
+  },
+  {
+    "id": "math_8",
+    "kind": "math",
+    "question": "2+3*4",
+    "expected": "14"
+  },
+  {
+    "id": "math_9",
+    "kind": "math",
+    "question": "100/4",
+    "expected": "25"
+  },
+  {
+    "id": "math_10",
+    "kind": "math",
+    "question": "2^8",
+    "expected": "256"
+  },
+  {
+    "id": "fact_11",
+    "kind": "fact",
+    "question": "Who invented Python?",
+    "expected": "Python was created by Guido van Rossum."
+  },
+  {
+    "id": "fact_12",
+    "kind": "fact",
+    "question": "Who created Laravel?",
+    "expected": "Laravel was created by Taylor Otwell."
+  },
+  {
+    "id": "fact_13",
+    "kind": "fact",
+    "question": "Who originally developed MySQL?",
+    "expected": "MySQL was originally developed by Michael Widenius and David Axmark, with Allan Larsson a co-founder of MySQL AB."
+  },
+  {
+    "id": "quality_14",
+    "kind": "quality",
+    "question": "What is Python?",
+    "expected": true,
+    "answer": "Python is useful because"
+  },
+  {
+    "id": "quality_15",
+    "kind": "quality",
+    "question": "What is Python?",
+    "expected": false,
+    "answer": "Python is a general-purpose programming language."
+  },
+  {
+    "id": "verify_16",
+    "kind": "verify",
+    "question": "What is Python?",
+    "expected": [
+      1,
+      0,
+      0
+    ],
+    "answer": "Python is a general-purpose programming language."
+  },
+  {
+    "id": "verify_17",
+    "kind": "verify",
+    "question": "Who invented Python?",
+    "expected": [
+      0,
+      1,
+      0
+    ],
+    "answer": "Python was not created by Guido van Rossum."
+  },
+  {
+    "id": "verify_18",
+    "kind": "verify",
+    "question": "Who invented Python?",
+    "expected": [
+      0,
+      0,
+      1
+    ],
+    "answer": "Python was created by Taylor Otwell."
+  },
+  {
+    "id": "recovery_19",
+    "kind": "recovery",
+    "question": "What is Python?",
+    "expected": "regenerated",
+    "answer": "Python is useful because",
+    "candidate": "Python is a general-purpose programming language."
+  },
+  {
+    "id": "recovery_20",
+    "kind": "recovery",
+    "question": "What is Python?",
+    "expected": "fallback",
+    "answer": "",
+    "candidate": ""
+  },
+  {
+    "id": "recovery_21",
+    "kind": "recovery",
+    "question": "Who invented Python?",
+    "expected": "curated",
+    "answer": "Python was not created by Guido van Rossum.",
+    "candidate": ""
+  },
+  {
+    "id": "context_22",
+    "kind": "context",
+    "question": "Who invented Python?",
+    "expected": 1,
+    "history": [
+      {
+        "role": "user",
+        "content": "What is Python?"
+      },
+      {
+        "role": "assistant",
+        "content": "Python is a programming language."
+      },
+      {
+        "role": "user",
+        "content": "What is GST?"
+      },
+      {
+        "role": "assistant",
+        "content": "GST is a tax."
+      }
+    ]
+  },
+  {
+    "id": "context_23",
+    "kind": "context",
+    "question": "Tell me more",
+    "expected": 2,
+    "history": [
+      {
+        "role": "user",
+        "content": "What is Python?"
+      },
+      {
+        "role": "assistant",
+        "content": "Python is a programming language."
+      },
+      {
+        "role": "user",
+        "content": "What is GST?"
+      },
+      {
+        "role": "assistant",
+        "content": "GST is a tax."
+      }
+    ]
+  },
+  {
+    "id": "model_24",
+    "kind": "model",
+    "question": "Who invented Python?",
+    "expected": "Guido van Rossum"
+  },
+  {
+    "id": "model_25",
+    "kind": "model",
+    "question": "Who created Laravel?",
+    "expected": "Taylor Otwell"
+  },
+  {
+    "id": "model_26",
+    "kind": "model",
+    "question": "Who originally developed MySQL?",
+    "expected": "Michael Widenius and David Axmark; first release 1995 if mentioned"
+  },
+  {
+    "id": "model_27",
+    "kind": "model",
+    "question": "What is SQLite?",
+    "expected": "Embedded SQL database engine"
+  },
+  {
+    "id": "model_28",
+    "kind": "model",
+    "question": "Write a Python function to add two numbers.",
+    "expected": "Function returns sum of two arguments"
+  },
+  {
+    "id": "model_29",
+    "kind": "model",
+    "question": "What is 25 multiplied by 16?",
+    "expected": "400"
+  }
+]

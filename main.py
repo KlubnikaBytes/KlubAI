@@ -25,6 +25,7 @@ from intelligence.quality_router import QUALITY_COMMANDS
 from intelligence.fact_router import FACT_COMMANDS
 from intelligence.verification_router import VERIFY_COMMANDS
 from intelligence.recovery_router import RECOVERY_COMMANDS
+from intelligence.benchmark_router import BENCHMARK_COMMANDS
 from language.language_router import LANGUAGE_COMMANDS
 from core.model_manager import ModelManager, MODEL_COMMANDS
 from core.model_registry import MODELS
@@ -174,6 +175,7 @@ def show_help():
     commands.extend(FACT_COMMANDS.items())
     commands.extend(VERIFY_COMMANDS.items())
     commands.extend(RECOVERY_COMMANDS.items())
+    commands.extend(BENCHMARK_COMMANDS.items())
     for command, description in commands:
 
         table.add_row(
