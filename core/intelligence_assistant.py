@@ -1,3 +1,4 @@
+from intelligence.recovery_router import RecoveryRouter
 from intelligence.verification_router import VerificationRouter
 from intelligence.fact_router import FactRouter
 from intelligence.quality_router import QualityRouter
@@ -16,6 +17,8 @@ class IntelligenceEnabledKlubAI(LanguageEnabledKlubAI):
         self.fact_router = FactRouter()
         self.verification_router = VerificationRouter(self.fact_router.engine.registry)
 
+        self.recovery_router = RecoveryRouter(self)
+
     def get_conversation_messages(self):
         messages = super().get_conversation_messages()
         return self.context_router.engine.select(messages, self.context_router.enabled and self.response_language == "en").messages
@@ -27,6 +30,24 @@ class IntelligenceEnabledKlubAI(LanguageEnabledKlubAI):
             answer = "".join(stream)
         finally:
             stream.close()
+        if self.response_language == "en" and self.recovery_router.enabled:
+            def regenerate(reasons):
+                retry = [dict(m) for m in messages]
+                retry[0]["content"] += "\nAnswer the latest question again. Avoid unfinished sentences, repeated lines and unsupported claims. Complete any code fences."
+                stream = self.engine.stream_response(retry, temperature=0.2)
+                try:
+                    return "".join(stream).strip()
+                finally:
+                    stream.close()
+            try:
+                result = self.recovery_router.engine.recover(
+                    messages[-1]["content"], answer, regenerate,
+                    self.quality_router.enabled, self.verification_router.enabled,
+                    self.fact_router.enabled)
+                answer = result.answer
+                self.recovery_router.record(result)
+            except ValueError:
+                pass
         if self.response_language == "en" and self.quality_router.enabled:
             try:
                 self.quality_router.record(messages[-1]["content"], answer)
@@ -48,6 +69,10 @@ class IntelligenceEnabledKlubAI(LanguageEnabledKlubAI):
         return None
 
     def chat_stream(self, user_message):
+        response = self.recovery_router.route(user_message)
+        if response is not None:
+            yield response
+            return
         response = self.verification_router.route(user_message)
         if response is not None:
             yield response
@@ -76,9 +101,11 @@ class IntelligenceEnabledKlubAI(LanguageEnabledKlubAI):
         if user_message.strip().lower() == "/delete-data confirm":
             self.quality_router.reset()
             self.verification_router.reset()
+            self.recovery_router.reset()
 
     def clear_conversation(self):
         super().clear_conversation()
         self.quality_router.reset()
         self.verification_router.reset()
+        self.recovery_router.reset()
         self.last_intent = None
