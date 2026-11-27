@@ -1,3 +1,4 @@
+
 import time
 from knowledge.administration import COMMANDS
 
@@ -18,7 +19,8 @@ from config import (
     initialize_directories,
 )
 
-from core.language_assistant import LanguageEnabledKlubAI
+from core.intelligence_assistant import IntelligenceEnabledKlubAI
+from intelligence.intelligence_router import INTELLIGENCE_COMMANDS
 from language.language_router import LANGUAGE_COMMANDS
 from core.model_manager import ModelManager, MODEL_COMMANDS
 from core.model_registry import MODELS
@@ -162,6 +164,7 @@ def show_help():
     commands.extend(COMMANDS.items())
     commands.extend(LANGUAGE_COMMANDS.items())
     commands.extend(MODEL_COMMANDS.items())
+    commands.extend(INTELLIGENCE_COMMANDS.items())
     for command, description in commands:
 
         table.add_row(
@@ -334,7 +337,7 @@ def main():
 
     try:
 
-        assistant = LanguageEnabledKlubAI()
+        assistant = IntelligenceEnabledKlubAI()
 
         with console.status(
             "[bold green]Loading local AI model..."
