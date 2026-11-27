@@ -18,7 +18,8 @@ from config import (
     initialize_directories,
 )
 
-from core.rag_assistant import RAGEnabledKlubAI
+from core.language_assistant import LanguageEnabledKlubAI
+from language.language_router import LANGUAGE_COMMANDS
 
 
 console = Console()
@@ -157,6 +158,7 @@ def show_help():
     ]
 
     commands.extend(COMMANDS.items())
+    commands.extend(LANGUAGE_COMMANDS.items())
     for command, description in commands:
 
         table.add_row(
@@ -329,7 +331,7 @@ def main():
 
     try:
 
-        assistant = RAGEnabledKlubAI()
+        assistant = LanguageEnabledKlubAI()
 
         with console.status(
             "[bold green]Loading local AI model..."

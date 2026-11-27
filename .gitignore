@@ -73,3 +73,6 @@ phase7g_source.txt
 # Local release source export
 phase7h_source.txt
 storage/klubai.db*
+
+# Local multilingual source export
+phase8a_source.txt
