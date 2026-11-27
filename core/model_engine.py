@@ -1,7 +1,7 @@
+from core.model_registry import DEFAULT_MODEL, model_path
 from llama_cpp import Llama
 
 from config import (
-    MODEL_PATH,
     CONTEXT_SIZE,
     BATCH_SIZE,
     CPU_THREADS,
@@ -16,12 +16,16 @@ from config import (
 
 class ModelEngine:
 
-    def __init__(self):
+    def __init__(self, model_id=DEFAULT_MODEL):
 
         self.model = None
+        self.model_id = model_id
 
     def load_model(self):
 
+        if self.is_loaded():
+            return
+        MODEL_PATH = model_path(self.model_id)
         if not MODEL_PATH.is_file():
 
             raise FileNotFoundError(

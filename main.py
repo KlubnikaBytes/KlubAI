@@ -20,6 +20,8 @@ from config import (
 
 from core.language_assistant import LanguageEnabledKlubAI
 from language.language_router import LANGUAGE_COMMANDS
+from core.model_manager import ModelManager, MODEL_COMMANDS
+from core.model_registry import MODELS
 
 
 console = Console()
@@ -159,6 +161,7 @@ def show_help():
 
     commands.extend(COMMANDS.items())
     commands.extend(LANGUAGE_COMMANDS.items())
+    commands.extend(MODEL_COMMANDS.items())
     for command, description in commands:
 
         table.add_row(
@@ -169,7 +172,7 @@ def show_help():
     console.print(table)
 
 
-def show_model_information():
+def show_model_information(assistant):
 
     table = Table(
         title="KlubAI Model Information"
@@ -186,7 +189,7 @@ def show_model_information():
         ("Application", APP_NAME),
         ("Version", APP_VERSION),
         ("Developer", COMPANY_NAME),
-        ("Foundation model", MODEL_NAME),
+        ("Foundation model", MODELS[assistant.engine.model_id]),
         ("Execution", "Local CPU"),
         ("CPU threads", str(CPU_THREADS)),
         ("Context size", str(CONTEXT_SIZE)),
@@ -337,7 +340,9 @@ def main():
             "[bold green]Loading local AI model..."
         ):
 
-            assistant.initialize()
+            manager = ModelManager(assistant.engine, assistant.conversation.database)
+            startup = manager.initialize()
+        console.print(startup, markup=False)
 
         console.print(
             "[bold green]AI Engine Ready![/bold green]"
@@ -413,7 +418,12 @@ def main():
 
                 if command == "/model":
 
-                    show_model_information()
+                    show_model_information(assistant)
+                    continue
+
+                model_response = manager.route(user_input)
+                if model_response is not None:
+                    console.print(model_response, markup=False)
                     continue
 
                 display_response(

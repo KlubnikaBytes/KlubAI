@@ -1,4 +1,5 @@
 """Run local inference without touching conversation or memory databases."""
+import argparse
 import json
 import time
 from config import DATASETS_DIR
@@ -9,7 +10,11 @@ from language.response_validator import matches_language
 
 def main():
     cases = json.loads((DATASETS_DIR / 'multilingual_benchmark.json').read_text(encoding='utf8'))
-    engine = ModelEngine()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--model", choices=["1.7b", "4b"], default="1.7b")
+    args = parser.parse_args()
+    engine = ModelEngine(args.model)
+    print(f"Benchmark model: {args.model}")
     passed = 0
     try:
         engine.load_model()
