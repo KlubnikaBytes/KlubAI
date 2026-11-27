@@ -50,3 +50,26 @@ Thumbs.db
 # Private user input documents
 inputs/*
 !inputs/.gitkeep
+
+# KlubAI private knowledge data
+knowledge/documents/*
+!knowledge/documents/.gitkeep
+
+knowledge/indexes/*
+!knowledge/indexes/.gitkeep
+
+knowledge/embeddings/*
+!knowledge/embeddings/.gitkeep
+
+knowledge/cache/*
+!knowledge/cache/.gitkeep
+
+storage/knowledge.db*
+
+# Private knowledge backups and metadata
+storage/backups/
+phase7g_source.txt
+
+# Local release source export
+phase7h_source.txt
+storage/klubai.db*

@@ -1,5 +1,5 @@
-
 import time
+from knowledge.administration import COMMANDS
 
 from rich.console import Console
 from rich.panel import Panel
@@ -18,7 +18,7 @@ from config import (
     initialize_directories,
 )
 
-from core.analysis_assistant import AnalysisEnabledKlubAI
+from core.rag_assistant import RAGEnabledKlubAI
 
 
 console = Console()
@@ -90,6 +90,24 @@ def show_help():
     )
 
     commands = [
+        ("/ask-knowledge question", "Answer from local knowledge"),
+        ("/rag-info", "Show RAG configuration"),
+        ("/rag-help", "Show RAG commands"),
+        ("/rag-on", "Enable automatic knowledge questions"),
+        ("/rag-off", "Disable automatic knowledge questions"),
+        ("/knowledge-semantic query", "Semantic knowledge search"),
+        ("/knowledge-hybrid query", "Hybrid knowledge search"),
+        ("/knowledge-retrieval-info", "Show retrieval statistics"),
+        ("/knowledge-embed", "Generate missing local embeddings"),
+        ("/knowledge-embedding-info", "Show embedding statistics"),
+        ("/knowledge-help", "Show knowledge commands"),
+        ("/knowledge-files", "List source documents"),
+        ("/knowledge-add filename", "Import document"),
+        ("/knowledge-add-all", "Import all supported documents"),
+        ("/knowledge-info", "Show knowledge statistics"),
+        ("/knowledge-list", "List indexed documents"),
+        ("/knowledge-search words", "Search local knowledge"),
+        ("/knowledge-remove ID confirm", "Remove indexed document"),
         ("/analysis-help", "Show data analysis commands"),
         ("/sum filename column", "Calculate column total"),
         ("/average filename column", "Calculate average"),
@@ -138,6 +156,7 @@ def show_help():
         ("/exit", "Exit KlubAI"),
     ]
 
+    commands.extend(COMMANDS.items())
     for command, description in commands:
 
         table.add_row(
@@ -310,7 +329,7 @@ def main():
 
     try:
 
-        assistant = AnalysisEnabledKlubAI()
+        assistant = RAGEnabledKlubAI()
 
         with console.status(
             "[bold green]Loading local AI model..."

@@ -1,5 +1,28 @@
 # KlubAI – Changelog
 
+## Version 0.6.0 – 27 November 2026 (planned release)
+
+### Independent Knowledge Engine
+
+- SQLite FTS5/BM25 indexing, document ingestion and overlapping chunks.
+- Local 384-dimensional embeddings, cosine search and reciprocal rank fusion.
+- Retrieval-augmented answers with exact excerpt validation and source references.
+- Rule-based section selection and whitespace-tolerant answer recovery.
+- Document updates, synchronization preview, duplicate detection and reindexing.
+- Integrity checks, SQLite backups, restoration, metadata export and confirmed clearing.
+
+### Verification
+
+- 218 automated tests passed on Windows; dependency check passed.
+- Individual reindexing and multi-product retrieval verified.
+- Isolated backup restoration tested; full live restoration and bulk reindexing not verified.
+- Network disconnection was not independently recorded.
+
+### Limitations
+
+- Pretrained Qwen3 weights; no custom training yet. English-oriented retrieval; answers may be incomplete or inaccurate.
+- Backups are unencrypted and exclude original documents. Single-process administration only.
+
 ## Version 0.5.0 – 26 November 2026
 
 ### Intelligent Task Execution Release
