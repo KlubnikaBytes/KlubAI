@@ -22,6 +22,7 @@ from core.intelligence_assistant import IntelligenceEnabledKlubAI
 from intelligence.intelligence_router import INTELLIGENCE_COMMANDS
 from intelligence.context_router import CONTEXT_COMMANDS
 from intelligence.quality_router import QUALITY_COMMANDS
+from intelligence.fact_router import FACT_COMMANDS
 from language.language_router import LANGUAGE_COMMANDS
 from core.model_manager import ModelManager, MODEL_COMMANDS
 from core.model_registry import MODELS
@@ -168,6 +169,7 @@ def show_help():
     commands.extend(INTELLIGENCE_COMMANDS.items())
     commands.extend(CONTEXT_COMMANDS.items())
     commands.extend(QUALITY_COMMANDS.items())
+    commands.extend(FACT_COMMANDS.items())
     for command, description in commands:
 
         table.add_row(

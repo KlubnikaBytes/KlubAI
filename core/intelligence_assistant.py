@@ -1,3 +1,4 @@
+from intelligence.fact_router import FactRouter
 from intelligence.quality_router import QualityRouter
 from intelligence.context_router import ContextRouter
 from core.language_assistant import LanguageEnabledKlubAI
@@ -11,6 +12,7 @@ class IntelligenceEnabledKlubAI(LanguageEnabledKlubAI):
         self.last_intent = None
         self.context_router = ContextRouter(self)
         self.quality_router = QualityRouter()
+        self.fact_router = FactRouter()
 
     def get_conversation_messages(self):
         messages = super().get_conversation_messages()
@@ -30,7 +32,19 @@ class IntelligenceEnabledKlubAI(LanguageEnabledKlubAI):
                 pass  # Unsupported assessment input must not block chat.
         yield answer
 
+    def handle_direct_question(self, message):
+        response = super().handle_direct_question(message)
+        if response is not None:
+            return response
+        if self.fact_router.enabled and self.preferences.get() in ("auto", "en"):
+            return self.fact_router.engine.answer(message)
+        return None
+
     def chat_stream(self, user_message):
+        response = self.fact_router.route(user_message)
+        if response is not None:
+            yield response
+            return
         response = self.quality_router.route(user_message)
         if response is not None:
             yield response

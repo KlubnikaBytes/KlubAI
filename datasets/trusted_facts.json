@@ -1,0 +1,90 @@
+[
+  {
+    "id": "python_definition",
+    "entity": "Python",
+    "predicate": "definition",
+    "answer": "Python is a general-purpose programming language.",
+    "publisher": "Python Software Foundation",
+    "url": "https://docs.python.org/3/faq/general.html"
+  },
+  {
+    "id": "python_creator",
+    "entity": "Python",
+    "predicate": "creator",
+    "answer": "Python was created by Guido van Rossum.",
+    "publisher": "Python Software Foundation",
+    "url": "https://docs.python.org/3/faq/general.html"
+  },
+  {
+    "id": "laravel_definition",
+    "entity": "Laravel",
+    "predicate": "definition",
+    "answer": "Laravel is a PHP web application framework.",
+    "publisher": "Laravel documentation",
+    "url": "https://laravel.com/docs"
+  },
+  {
+    "id": "mysql_definition",
+    "entity": "MySQL",
+    "predicate": "definition",
+    "answer": "MySQL is a relational database management system.",
+    "publisher": "MySQL Reference Manual",
+    "url": "https://dev.mysql.com/doc/refman/en/what-is-mysql.html"
+  },
+  {
+    "id": "sqlite_definition",
+    "entity": "SQLite",
+    "predicate": "definition",
+    "answer": "SQLite is an embedded SQL database engine.",
+    "publisher": "SQLite documentation",
+    "url": "https://www.sqlite.org/about.html"
+  },
+  {
+    "id": "git_definition",
+    "entity": "Git",
+    "predicate": "definition",
+    "answer": "Git is a distributed version control system.",
+    "publisher": "Git documentation",
+    "url": "https://git-scm.com/book/en/v2/Getting-Started-What-is-Git%3F"
+  },
+  {
+    "id": "flutter_definition",
+    "entity": "Flutter",
+    "predicate": "definition",
+    "answer": "Flutter is an open-source UI toolkit for building applications from a single codebase.",
+    "publisher": "Flutter documentation",
+    "url": "https://docs.flutter.dev/resources/faq"
+  },
+  {
+    "id": "postgresql_definition",
+    "entity": "PostgreSQL",
+    "predicate": "definition",
+    "answer": "PostgreSQL is an open-source object-relational database system.",
+    "publisher": "PostgreSQL documentation",
+    "url": "https://www.postgresql.org/about/"
+  },
+  {
+    "id": "react_definition",
+    "entity": "React",
+    "predicate": "definition",
+    "answer": "React is a library for building user interfaces.",
+    "publisher": "React documentation",
+    "url": "https://react.dev/"
+  },
+  {
+    "id": "mysql_creator",
+    "entity": "MySQL",
+    "predicate": "creator",
+    "answer": "MySQL was originally developed by Michael Widenius and David Axmark, with Allan Larsson a co-founder of MySQL AB.",
+    "publisher": "MySQL Reference Manual",
+    "url": "https://dev.mysql.com/doc/refman/en/history.html"
+  },
+  {
+    "id": "laravel_creator",
+    "entity": "Laravel",
+    "predicate": "creator",
+    "answer": "Laravel was created by Taylor Otwell.",
+    "publisher": "Laravel GitHub repository",
+    "url": "https://github.com/laravel/laravel"
+  }
+]
