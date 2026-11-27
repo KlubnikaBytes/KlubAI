@@ -74,4 +74,4 @@ def test_number_only_is_not_calculation(text):
     assert (
         HindiQuestionClassifier().classify(text).intent
         == "unknown"
-    )    
+    )
