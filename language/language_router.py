@@ -1,7 +1,11 @@
+from language.hindi_normalizer import analyze_hindi, hindi_search_key, safe_preview
 from language.language_detector import LanguageDetector
 from language.language_registry import LANGUAGES
 
 LANGUAGE_COMMANDS = {
+    "/hindi-help": "Show Hindi text analysis commands",
+    "/hindi-normalize text": "Preview normalized Hindi text",
+    "/hindi-analyze text": "Inspect Hindi script and search key",
     '/language [auto|en|hi|bn|hinglish]': 'Show or set response preference',
     '/language-reset': 'Reset response preference',
     '/language-help': 'Show language detection commands',
@@ -22,6 +26,24 @@ class LanguageRouter:
             return None
         command = parts[0].lower()
         arg = parts[1] if len(parts) == 2 else ''
+        if command.startswith('/hindi-'):
+            if command == '/hindi-help' and not arg:
+                return '\n'.join(f'{k} - {v}' for k, v in LANGUAGE_COMMANDS.items() if k.startswith('/hindi-'))
+            if command not in ('/hindi-normalize', '/hindi-analyze') or not arg:
+                return 'Use /hindi-help.'
+            try:
+                result = analyze_hindi(arg)
+            except ValueError as error:
+                return str(error)
+            preview = safe_preview(result.normalized)
+            if command == '/hindi-normalize':
+                return 'Normalized preview: ' + preview
+            return (f'Normalized preview: {preview}\n'
+                    f'Search key: {safe_preview(hindi_search_key(arg))}\n'
+                    f'Devanagari letters: {result.devanagari_letters}\n'
+                    f'Latin letters: {result.latin_letters}\n'
+                    f'Devanagari digits: {result.devanagari_digits}\n'
+                    'Analysis only; no commands executed.')
         if command in ('/language', '/language-reset'):
             if self.preferences is None:
                 return 'Language preferences unavailable.'
