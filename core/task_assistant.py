@@ -1,4 +1,3 @@
-
 from decimal import DecimalException
 
 from core.file_assistant import FileEnabledKlubAI
@@ -51,7 +50,7 @@ class TaskEnabledKlubAI(FileEnabledKlubAI):
 
             return
 
-        command = user_message.lower()
+        command = " ".join(user_message.lower().split())
 
         # Do not automatically store extracted documents
         # in conversation history or AI memory.

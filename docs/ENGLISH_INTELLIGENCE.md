@@ -1,0 +1,7 @@
+# English intelligence integration (0.7.0-dev)
+
+Routing is layered: diagnostic commands, language commands, knowledge/RAG, document analysis, task tools, file generation, memory/direct facts, then local model chat. Classification is observational, not an autonomous tool dispatcher. General English model responses are buffered, language checked, optionally recovered, and assessed before saving. Deterministic responses bypass model quality metrics. Recovery can retry once after language validation; language validation itself can retry once. Exact curated statements and negations are not general factual verification.
+
+Integration tests use temporary SQLite databases, temporary file directories and scripted model responses. They do not load model weights or measure real model accuracy. Run `python -m pytest tests/test_english_integration.py -v` and `python -m pytest tests -q`. Run both local models manually, verify history, memory, RAG and file generation. Do not delete production memory to test reset.
+
+Known limitations: English quality metrics are heuristic, unknown claims remain unverified, curated coverage is limited, diagnostic metrics are session-only, and general model output is buffered rather than token-streamed. The whitespace normalization in task history filtering prevents the tested natural-read tab variant from saving extracted content; this is not a complete privacy or security audit. Hindi, Bengali and mixed-language accuracy remain future work.
