@@ -69,3 +69,7 @@ storage/knowledge.db*
 # Private knowledge backups and metadata
 storage/backups/
 phase7g_source.txt
+
+# Local release source export
+phase7h_source.txt
+storage/klubai.db*
