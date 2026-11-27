@@ -1,3 +1,4 @@
+from intelligence.verification_router import VerificationRouter
 from intelligence.fact_router import FactRouter
 from intelligence.quality_router import QualityRouter
 from intelligence.context_router import ContextRouter
@@ -13,6 +14,7 @@ class IntelligenceEnabledKlubAI(LanguageEnabledKlubAI):
         self.context_router = ContextRouter(self)
         self.quality_router = QualityRouter()
         self.fact_router = FactRouter()
+        self.verification_router = VerificationRouter(self.fact_router.engine.registry)
 
     def get_conversation_messages(self):
         messages = super().get_conversation_messages()
@@ -30,6 +32,11 @@ class IntelligenceEnabledKlubAI(LanguageEnabledKlubAI):
                 self.quality_router.record(messages[-1]["content"], answer)
             except ValueError:
                 pass  # Unsupported assessment input must not block chat.
+        if self.response_language == "en" and self.verification_router.enabled:
+            try:
+                self.verification_router.record(answer)
+            except ValueError:
+                pass
         yield answer
 
     def handle_direct_question(self, message):
@@ -41,6 +48,10 @@ class IntelligenceEnabledKlubAI(LanguageEnabledKlubAI):
         return None
 
     def chat_stream(self, user_message):
+        response = self.verification_router.route(user_message)
+        if response is not None:
+            yield response
+            return
         response = self.fact_router.route(user_message)
         if response is not None:
             yield response
@@ -64,8 +75,10 @@ class IntelligenceEnabledKlubAI(LanguageEnabledKlubAI):
         yield from super().chat_stream(user_message)
         if user_message.strip().lower() == "/delete-data confirm":
             self.quality_router.reset()
+            self.verification_router.reset()
 
     def clear_conversation(self):
         super().clear_conversation()
         self.quality_router.reset()
+        self.verification_router.reset()
         self.last_intent = None
