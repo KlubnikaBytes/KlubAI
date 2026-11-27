@@ -3,6 +3,7 @@ from language.language_detector import LanguageDetector
 from language.language_registry import LANGUAGES
 
 LANGUAGE_COMMANDS = {
+    "/hindi-classify text": "Inspect Hindi question intent without executing it",
     "/hindi-help": "Show Hindi text analysis commands",
     "/hindi-normalize text": "Preview normalized Hindi text",
     "/hindi-analyze text": "Inspect Hindi script and search key",
@@ -29,6 +30,13 @@ class LanguageRouter:
         if command.startswith('/hindi-'):
             if command == '/hindi-help' and not arg:
                 return '\n'.join(f'{k} - {v}' for k, v in LANGUAGE_COMMANDS.items() if k.startswith('/hindi-'))
+            if command == '/hindi-classify' and arg:
+                from intelligence.hindi_question_classifier import HindiQuestionClassifier
+                try:
+                    result = HindiQuestionClassifier().classify(arg)
+                except ValueError as error:
+                    return str(error)
+                return f'Intent: {result.intent}\nReason: {result.reason}\nMode: observation only'
             if command not in ('/hindi-normalize', '/hindi-analyze') or not arg:
                 return 'Use /hindi-help.'
             try:

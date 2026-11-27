@@ -25,7 +25,7 @@ class IntelligenceRouter:
                 return str(error)
             return f"Intent: {result.intent}\nReason: {result.reason}\nMode: observation only"
         if cmd == "/intelligence-info" and len(parts) == 1:
-            return "Question classifier: enabled\nMethod: local English rules\nMode: observation only; existing routing unchanged"
+            return "Question classifier: enabled\nMethod: local English and Hindi rules\nMode: observation only; existing routing unchanged"
         if cmd == "/intelligence-help" and len(parts) == 1:
             return "\n".join(f"{k}: {v}" for k, v in INTELLIGENCE_COMMANDS.items())
         if cmd.startswith("/intelligence-"):

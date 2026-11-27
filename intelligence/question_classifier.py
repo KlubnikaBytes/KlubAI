@@ -40,6 +40,9 @@ class QuestionClassifier:
             return Classification("empty", "No input")
         if re.match(r"^/[a-z][a-z0-9-]*(?:\s|$)", normalized):
             return Classification("command", "Slash command syntax")
+        if re.search(r"[\u0900-\u097f]", normalized):
+            from intelligence.hindi_question_classifier import HindiQuestionClassifier
+            return HindiQuestionClassifier().classify(text)
         for intent, pattern in self.RULES:
             if re.match(pattern, normalized):
                 return Classification(intent, "Matched English intent pattern")
