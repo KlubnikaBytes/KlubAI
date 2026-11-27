@@ -18,7 +18,7 @@ class Detection:
 
 class LanguageDetector:
     MAX_LENGTH = 10000
-    ROMAN_HINDI = frozenset('kya hai hain kaise kaun kahan kyun nahi nahin mujhe mera meri aap tum batao karo karein chahiye kaam hindi mein samjhao'.split())
+    ROMAN_HINDI = frozenset('kya hai hain kaise kaun kahan kyun nahi nahin mujhe mera meri aap tum batao karo karein chahiye kaam hindi mein samjhao ek iska iske iski hota hoti hote karta karti karte karna liye aur bahut agar lekin wala wali sakta sakti sakte jawab istemal zaroori'.split())
     ENGLISH = frozenset('what is are how who where why when the a an this that can you please explain create write hello hi thanks good tell me about python invoice function report'.split())
 
     def detect(self, text):

@@ -1,4 +1,3 @@
-
 import sqlite3
 
 from contextlib import contextmanager
@@ -79,6 +78,12 @@ class Database:
                     memory_value TEXT NOT NULL,
                     created_at TEXT DEFAULT CURRENT_TIMESTAMP,
                     updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+                );
+
+                CREATE TABLE IF NOT EXISTS application_settings (
+                    key TEXT PRIMARY KEY,
+                    value TEXT NOT NULL,
+                    updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
                 );
 
                 CREATE INDEX IF NOT EXISTS
@@ -254,3 +259,5 @@ class Database:
             connection.execute(
                 "DELETE FROM user_memory"
             )
+
+            connection.execute("DELETE FROM application_settings")

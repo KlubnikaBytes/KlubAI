@@ -1,4 +1,3 @@
-
 from core.model_engine import ModelEngine
 from core.conversation import ConversationManager
 
@@ -128,7 +127,7 @@ class KlubAI:
             self.conversation.clear_all_data()
 
             return (
-                "Saved conversations and facts "
+                "Saved conversations, facts and application settings "
                 "have been cleared from the database."
             )
 
@@ -211,6 +210,12 @@ class KlubAI:
 
         return responses.get(normalized)
 
+    def get_conversation_messages(self):
+        return self.conversation.get_messages()
+
+    def stream_chat_response(self, messages):
+        yield from self.engine.stream_response(messages)
+
     def chat_stream(self, user_message):
 
         user_message = user_message.strip()
@@ -267,11 +272,11 @@ class KlubAI:
                 return
 
             # AI-generated streaming response
-            messages = self.conversation.get_messages()
+            messages = self.get_conversation_messages()
 
             response_parts = []
 
-            stream = self.engine.stream_response(
+            stream = self.stream_chat_response(
                 messages
             )
 

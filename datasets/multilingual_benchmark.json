@@ -1,0 +1,62 @@
+[
+  {
+    "language": "en",
+    "question": "What is Python?",
+    "reference": "Python is a general-purpose programming language."
+  },
+  {
+    "language": "en",
+    "question": "What is Laravel?",
+    "reference": "Laravel is a PHP web application framework."
+  },
+  {
+    "language": "en",
+    "question": "What is MySQL?",
+    "reference": "MySQL is a relational database management system."
+  },
+  {
+    "language": "hi",
+    "question": "What is Python?",
+    "reference": "Python is a general-purpose programming language."
+  },
+  {
+    "language": "hi",
+    "question": "What is Laravel?",
+    "reference": "Laravel is a PHP web application framework."
+  },
+  {
+    "language": "hi",
+    "question": "What is MySQL?",
+    "reference": "MySQL is a relational database management system."
+  },
+  {
+    "language": "bn",
+    "question": "What is Python?",
+    "reference": "Python is a general-purpose programming language."
+  },
+  {
+    "language": "bn",
+    "question": "What is Laravel?",
+    "reference": "Laravel is a PHP web application framework."
+  },
+  {
+    "language": "bn",
+    "question": "What is MySQL?",
+    "reference": "MySQL is a relational database management system."
+  },
+  {
+    "language": "hinglish",
+    "question": "What is Python?",
+    "reference": "Python is a general-purpose programming language."
+  },
+  {
+    "language": "hinglish",
+    "question": "What is Laravel?",
+    "reference": "Laravel is a PHP web application framework."
+  },
+  {
+    "language": "hinglish",
+    "question": "What is MySQL?",
+    "reference": "MySQL is a relational database management system."
+  }
+]

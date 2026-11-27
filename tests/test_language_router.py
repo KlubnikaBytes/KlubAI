@@ -18,7 +18,7 @@ def test_languages():
     assert 'hinglish' in LanguageRouter().route('/languages')
 
 def test_info():
-    assert 'not implemented yet' in LanguageRouter().route('/language-info')
+    assert 'enabled for general AI chat' in LanguageRouter().route('/language-info')
 
 def test_unknown():
     assert 'Unknown' in LanguageRouter().route('/language-invalid')
